@@ -13,6 +13,7 @@ mode: all
     user.mouse_sleep()
     speech.disable()
     user.engine_sleep()
-^talon sleep [<phrase>]$: speech.disable()
+^(talon sleep | drowse) [<phrase>]$: speech.disable()
 ^talon wake$: speech.enable()
-
+^postalveolar_click$: speech.enable()
+drowse <phrase> resume$: skip()

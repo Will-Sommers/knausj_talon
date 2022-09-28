@@ -6,8 +6,12 @@ double dash: "--"
 triple quote: "'''"
 (triple grave | triple back tick | gravy):
     insert("```")
+patch {user.symbol_key}:
+    edit.line_end()
+    "{symbol_key}"
+    edit.line_insert_down()    
 (dot dot | dotdot): ".."
-ellipses: "..."
+pebbles: "..."
 (comma and | spamma): ", "
 plus: "+"
 arrow: "->"
@@ -15,40 +19,62 @@ dub arrow: "=>"
 new line: "\\n"
 carriage return: "\\r"
 line feed: "\\r\\n"
-empty dubstring:
+spam: ", "
+coal gap: ": "
+pipe gap: " | "
+boom: ". "
+empty round: "()"
+empty square: "[]"
+empty curly: "{}"
+empty diamond: "<>"
+empty quad: '""'
+empty twin: "''"
+empty escaped quad: '\\"\\"'
+empty escaped twin: "\\'\\'"
+empty escaped round: '\\(\\)'
+empty escaped curly: '\\{{\\}}'
+
+``
+
+tween <user.symbol_key>:
+    '{symbol_key}{symbol_key}'
+    key(left)
+quad:
     '""'
     key(left)
-empty escaped (dubstring|dub quotes):
+twin:
+    "''"
+    key(left)
+ski:
+    '``'
+    key(left)
+escaped quad:
     '\\"\\"'
     key(left)
     key(left)
-empty string:
-    "''"
-    key(left)
-empty escaped string:
+escaped twin:
     "\\'\\'"
     key(left)
     key(left)
-(inside parens | args):
+round:
 	insert("()")
 	key(left)
-inside (squares | square brackets | list):
-	insert("[]")
+escaped round:
+    '\\(\\)'
+    key(left)
+    key(left)
+escaped curly:
+    '\\{{\\}}'
+    key(left)
+    key(left)
+square: 
+	insert("[]") 
 	key(left)
-inside (bracket | braces):
-	insert("{}")
+curly: 
+	insert("{}") 
 	key(left)
-inside percent:
-	insert("%%")
-	key(left)
-inside (quotes | string):
-	insert("''")
-	key(left)
-inside (double quotes | dubquotes):
-    insert('""')
-	key(left)
-inside (graves | back ticks):
-	insert("``")
+diamond: 
+	insert("<>") 
 	key(left)
 angle that:
     text = edit.selected_text()

@@ -27,31 +27,41 @@ settings():
 (op | is) strict equal: " === "
 (op | is) strict not equal: " !== "
 
-state const: "const "
+<user.operator> const: "const "
 
-state let: "let "
+<user.operator> let: "let "
 
-state var: "var "
+<user.operator> var: "var "
 
-state export: "export "
+<user.operator> export: "export "
 
-state async: "async "
+<user.operator> async: "async "
 
-state await: "await "
+<user.operator> await: "await "
 
-state map:
+<user.operator> map:
     insert(".map()")
     key(left)
 
-state filter:
+<user.operator> filter:
     insert(".filter()")
     key(left)
 
-state reduce:
+<user.operator> reduce:
     insert(".reduce()")
     key(left)
 
-state spread: "..."
+<user.operator> spread: "..."
+
+<user.operator> length: insert(".length")
+
+<user.operator> quote var:
+  insert("${}")
+  key(left)
+
+<user.operator> log:
+  insert("console.log()")
+  key(left)
 
 from import:
     insert(' from  ""')

@@ -275,3 +275,16 @@ ctx.lists["self.prose_formatter"] = {
     "sentence": "CAPITALIZE_FIRST_WORD",
 }
 
+
+ctx = Context()
+mod = Module()
+mod.list("phrase_ender", desc="list of commands that can be used to end a phrase")
+ctx.lists["self.phrase_ender"] = {
+    "void": "space",
+    "clap": "enter",
+    "coal gap": ": space",
+    "spam": ", space",
+    "halt": "space:0",
+}
+
+

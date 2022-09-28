@@ -4,24 +4,42 @@ find it:
 next one:
     edit.find_next()
 
-go word left:
-    edit.word_left()
-
-go word right:
-    edit.word_right()
-
-go left:
+tug:
     edit.left()
 
-go right:
+tug <number_small> times: 
+    user.left_n(number_small)
+
+drain:
+    edit.word_left()
+
+drain <number_small> times:
+    user.words_left(number_small) 
+
+push:
     edit.right()
 
-go up:
-    edit.up()
+push <number_small> times:
+    user.right_n(number_small)
 
-go down:
-    edit.down()
+step:
+    edit.word_right()
 
+step <number_small> times:
+    user.words_right(number_small)
+
+north:
+    user.up_n(1)
+
+north <number_small> times:
+    user.up_n(number_small)
+
+south:
+    user.down_n(1)
+
+south <number_small> times:
+    user.down_n(number_small)
+    
 go line start:
     edit.line_start()
 
@@ -40,10 +58,10 @@ go way down:
 
 go way up:
     edit.file_start()
-    
+
 go bottom:
     edit.file_end()
-    
+
 go top:
     edit.file_start()
 
@@ -133,7 +151,7 @@ clear way left:
     edit.extend_line_start()
     edit.delete()
 
-clear way right:
+<user.delete> tail:
     edit.extend_line_end()
     edit.delete()
 

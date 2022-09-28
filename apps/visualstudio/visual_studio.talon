@@ -94,3 +94,8 @@ debug step out [of]: key(f10)
 debug start: key(f5)
 debug stopper: key(shift-f5)
 debug continue: key(f5)
+debug stench:
+    user.vscode_with_plugin("commands.startDebugging", "Run Extension")
+debug restart: 
+    user.vscode("workbench.action.debug.stop")
+    user.vscode("workbench.action.debug.start")

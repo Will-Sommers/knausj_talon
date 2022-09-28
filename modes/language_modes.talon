@@ -1,4 +1,5 @@
 ^force see sharp$: user.code_set_language_mode("csharp")
+^force ruby$: user.code_set_language_mode("ruby")
 ^force see plus plus$: user.code_set_language_mode("cplusplus")
 ^force go (lang|language)$: user.code_set_language_mode("go")
 ^force java$: user.code_set_language_mode("java")

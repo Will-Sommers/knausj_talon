@@ -1,4 +1,9 @@
 from talon import Context, actions, ui, Module, app, clip
+from typing import Optional
+import json
+import re
+from pathlib import Path
+from os.path import expanduser
 
 is_mac = app.platform == "mac"
 
@@ -135,6 +140,23 @@ class WinActions:
 
         return ""
 
+    def change_setting(setting_name: str, setting_value: any):
+        """
+        Changes a VSCode setting by name
+        Args:
+            setting_name (str): The name of the setting
+            setting_value (any): The new value.  Will be JSON encoded
+        """
+        original_settings_path = Path(
+            expanduser("~/Library/Application Support/Code/User/settings.json")
+        )
+        original_settings = original_settings_path.read_text()
+        regex = re.compile(rf'^(\s*)"{setting_name}": .*[^,](,?)$', re.MULTILINE)
+        new_settings = regex.sub(
+            rf'\1"{setting_name}": {json.dumps(setting_value)}\2', original_settings
+        )
+        original_settings_path.write_text(new_settings)
+
 
 @mod.action_class
 class Actions:
@@ -145,6 +167,18 @@ class Actions:
     def command_palette():
         """Show command palette"""
         actions.key("ctrl-shift-p")
+
+    def cursorless_record_navigation_test():
+        """Run cursorless record navigation test"""
+        actions.user.vscode_with_plugin(
+            "cursorless.recordTestCase", {"isHatTokenMapTest": True}
+        )
+
+    def cursorless_record_error_test():
+        """Run cursorless record navigation test"""
+        actions.user.vscode_with_plugin(
+            "cursorless.recordTestCase", {"isErrorTest": True}
+        )
 
 
 @mac_ctx.action_class("user")
@@ -169,7 +203,7 @@ class UserActions:
         actions.user.vscode("workbench.action.focusLeftGroup")
 
     def split_next():
-        actions.user.vscode_and_wait("workbench.action.focusRightGroup")
+        actions.user.vscode_and_wait("workbench.action.navigateEditorGroups")
 
     def split_window_down():
         actions.user.vscode("workbench.action.moveEditorToBelowGroup")
@@ -243,7 +277,9 @@ class UserActions:
     def tab_jump(number: int):
         if number < 10:
             if is_mac:
-                actions.user.vscode_with_plugin(f"workbench.action.openEditorAtIndex{number}")
+                actions.user.vscode_with_plugin(
+                    f"workbench.action.openEditorAtIndex{number}"
+                )
             else:
                 actions.key("alt-{}".format(number))
 
@@ -356,3 +392,6 @@ class UserActions:
         actions.edit.find(text)
         actions.sleep("100ms")
         actions.key("esc")
+
+
+#

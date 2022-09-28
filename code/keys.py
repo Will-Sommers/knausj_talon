@@ -3,7 +3,7 @@ from typing import Set
 from talon import Module, Context, actions, app
 import sys
 
-default_alphabet = "air bat cap drum each fine gust harp sit jury crunch look made near odd pit quench red sun trap urge vest whale plex yank zip".split(
+default_alphabet = "air bat cap drum each fine gust harp ink jane kick look made near ox pit quench risk spun trap urge vest whale plex yank zip".split(
     " "
 )
 letters_string = "abcdefghijklmnopqrstuvwxyz"
@@ -114,11 +114,13 @@ ctx = Context()
 modifier_keys = {
     # If you find 'alt' is often misrecognized, try using 'alter'.
     "alt": "alt",  #'alter': 'alt',
-    "control": "ctrl",  #'troll':   'ctrl',
-    "shift": "shift",  #'sky':     'shift',
+    "troll": "ctrl",  #'troll':   'ctrl',
+    "option": "alt",
+    "ship": "shift",  #'sky':     'shift',
     "super": "super",
+    "many": "cmd",
 }
-if app.platform  == "mac":
+if app.platform == "mac":
     modifier_keys["command"] = "cmd"
     modifier_keys["option"] = "alt"
 ctx.lists["self.modifier_key"] = modifier_keys
@@ -132,83 +134,56 @@ punctuation_words = {
     # Dragon. Possibly it has been fixed by later improvements to talon? -rntz
     "`": "`",
     ",": ",",  # <== these things
-    "back tick": "`",
-    "grave": "`",
-    "comma": ",",
-    "period": ".",
-    "full stop": ".",
-    "semicolon": ";",
-    "colon": ":",
-    "forward slash": "/",
-    "question mark": "?",
-    "exclamation mark": "!",
-    "exclamation point": "!",
-    "asterisk": "*",
-    "hash sign": "#",
-    "number sign": "#",
-    "percent sign": "%",
     "at sign": "@",
-    "and sign": "&",
-    "ampersand": "&",
-
     # Currencies
     "dollar sign": "$",
     "pound sign": "£",
 }
-symbol_key_words = {
-    "dot": ".",
+
+immune_symbol_key_words = {
     "point": ".",
-    "quote": "'",
-    "apostrophe": "'",
-    "L square": "[",
-    "left square": "[",
-    "square": "[",
-    "R square": "]",
-    "right square": "]",
-    "slash": "/",
-    "backslash": "\\",
-    "minus": "-",
     "dash": "-",
-    "equals": "=",
+}
+
+symbol_key_words = {
+    "brick": "`",
+    "stroke": "/",
+    "backstroke": "\\",
+    "equal": "=",
     "plus": "+",
     "tilde": "~",
     "bang": "!",
-    "down score": "_",
-    "under score": "_",
-    "paren": "(",
-    "L paren": "(",
-    "left paren": "(",
-    "R paren": ")",
-    "right paren": ")",
-    "brace": "{",
-    "left brace": "{",
-    "R brace": "}",
-    "right brace": "}",
-    "angle": "<",
-    "left angle": "<",
-    "less than": "<",
-    "rangle": ">",
-    "R angle": ">",
-    "right angle": ">",
-    "greater than": ">",
-    "star": "*",
-    "hash": "#",
-    "percent": "%",
-    "caret": "^",
+    "score": "_",
+    "quest": "?",  
+    "single": "'",
+    "double": '"',
+    "leper": "(",
+    "repper": ")",
+    "lack": "[",
+    "rack": "]",
+    "lace": "{",
+    "race": "}",
+    "langle": "<",
+    "wrangle": ">",
+    "snow": "*",
+    "pound": "#",
+    "percy": "%",
+    "tangle": "^",
     "amper": "&",
     "pipe": "|",
-    "dubquote": '"',
-    "double quote": '"',
-
-    # Currencies
     "dollar": "$",
-    "pound": "£",
+    "semi": ";",
+    "stack": ":",
+    "drip": ",",
 }
 
 # make punctuation words also included in {user.symbol_keys}
 symbol_key_words.update(punctuation_words)
+symbol_key_words.update(immune_symbol_key_words)
 ctx.lists["self.punctuation"] = punctuation_words
 ctx.lists["self.symbol_key"] = symbol_key_words
+ctx.lists["self.immune_symbol_key"] = immune_symbol_key_words
+
 ctx.lists["self.number_key"] = dict(zip(default_digits, numbers))
 ctx.lists["self.arrow_key"] = {
     "down": "down",
@@ -218,20 +193,18 @@ ctx.lists["self.arrow_key"] = {
 }
 
 simple_keys = [
-    "end",
-    "enter",
-    "escape",
-    "home",
-    "insert",
     "pagedown",
     "pageup",
-    "space",
     "tab",
 ]
 
 alternate_keys = {
-    "delete": "backspace",
-    "forward delete": "delete",
+    "clap": "enter",
+    "drill": "delete",
+    "chuck": "backspace",
+    "scratch": "delete",
+    "void": "space",
+    "scrape": "escape",
     #'junk': 'backspace',
     "page up": "pageup",
     "page down": "pagedown",

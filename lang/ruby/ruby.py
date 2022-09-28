@@ -1,4 +1,4 @@
-from talon import Context, actions, settings
+from talon import Module, Context, actions, settings
 
 ctx = Context()
 ctx.matches = r"""
@@ -6,6 +6,22 @@ mode: user.ruby
 mode: user.auto_lang
 and code.language: ruby
 """
+
+mod = Module()
+
+ctx.lists["user.python_type_list"] = {
+    "break": "break",
+    "continue": "continue",
+    "class": "class ",
+    "return": "return ",
+    "import": "import ",
+    "null": "None",
+    "true": "True",
+    "false": "False",
+    "yield": "yield ",
+    "from": "from ",
+}
+
 
 @ctx.action_class('user')
 class UserActions:
@@ -65,6 +81,14 @@ class UserActions:
     def code_state_for_each():
         actions.insert('.each do ||')
         actions.key('left')
+
+    def code_state_for_each_with():
+        actions.insert('.each_with_index do | , i|')
+        actions.key('left')
+        actions.key('left')
+        actions.key('left')
+        actions.key('left')
+
     def code_define_class(): actions.auto_insert('class ')
     def code_import():
         actions.auto_insert('require ""')
@@ -89,3 +113,12 @@ class UserActions:
             )
         )
         actions.user.paste(result)
+        actions.insert('()')
+        actions.key('enter')
+        actions.key('enter')
+        actions.insert('end')
+        actions.key('escape')
+        actions.key('up')
+        actions.key('up')
+        actions.key('cmd-right')
+        actions.key('left')

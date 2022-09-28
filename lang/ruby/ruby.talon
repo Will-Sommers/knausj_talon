@@ -27,7 +27,7 @@ settings():
     user.code_protected_variable_formatter = "SNAKE_CASE"
     user.code_public_variable_formatter = "SNAKE_CASE"
 
-args pipe:
+<user.operator> pipe:
     insert("||")
     key(left)
 
@@ -35,11 +35,36 @@ args pipe:
 dock string:
     user.code_comment_documentation()
 
-state end: "end"
-state begin: "begin"
-state rescue: "rescue "
-state module: "module "
+<user.operator> end: "end"
+<user.operator> begin: "begin"
+<user.operator> rescue: "rescue "
+<user.operator> module: "module "
+<user.operator> length: ".length"
 
 ^instance <user.text>$:
     insert("@")
     user.code_public_variable_formatter(text)
+
+
+(nail | null | nil | nile): "nil"
+
+<user.operator> each: user.code_state_for_each()
+
+<user.operator> quote var:
+  insert("#{}")
+  key(left)
+
+<user.operator> log puts:
+  insert('puts ""')
+  key(left)
+
+<user.operator> log print:
+  insert('print ""')
+  key(left)
+
+<user.operator> ({user.code_keyword}+): 
+  user.code_keyword(code_keyword_list)
+
+state spec require: "require 'rspec/core'"
+state spec describe: "RSpec.describe '' do"
+state spec it: "it '' do"
